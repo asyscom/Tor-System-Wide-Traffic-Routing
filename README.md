@@ -1,13 +1,3 @@
-Ecco una versione aggiornata del file `README.md` con un titolo più specifico e con comandi per entrambe le distribuzioni, Rocky Linux e Debian.
-
-### Nome del Repository
-**`Tor-System-Wide-Traffic-Routing`**
-
-Questo nome chiarisce che il progetto riguarda la configurazione di un proxy Tor per instradare tutto il traffico di sistema.
-
----
-
-### `README.md`
 
 ```markdown
 # Tor-System-Wide-Traffic-Routing
@@ -29,6 +19,7 @@ This repository provides a comprehensive guide to routing all system-wide traffi
 6. [Advanced Options](#advanced-options)
 7. [Contributing](#contributing)
 8. [License](#license)
+9. [Support the Project](#support-the-project)
 
 ## Introduction
 
@@ -159,5 +150,20 @@ Contributions are welcome! Please feel free to submit a Pull Request or open an 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-```
 
+## Support the Project
+
+If you found this guide helpful and would like to support the project, consider making a donation. Your contributions help maintain and improve this resource.
+
+### Donate via Bitcoin
+You can send Bitcoin directly to the following address:
+
+**`bc1qy0l39zl7spspzhsuv96c8axnvksypfh8ehvx3e`**
+
+### Donate via Lightning Network
+For faster and lower-fee donations, you can use the Lightning Network:
+
+**`asyscom@sats.mobi`**
+
+Thank you for your support!
+```
