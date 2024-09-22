@@ -1,5 +1,4 @@
 
-```markdown
 # Tor-System-Wide-Traffic-Routing
 
 This repository provides a comprehensive guide to routing all system-wide traffic through Tor on Linux, with instructions for both Rocky Linux and Debian. The guide covers terminal-based tools like `curl` and browser configuration to ensure all your network traffic is anonymized through Tor.
@@ -35,11 +34,18 @@ First, ensure that your system is up-to-date:
 sudo dnf update -y
 ```
 
-Install Tor using the EPEL repository:
+Next, install Tor using the following commands:
 
 ```bash
-sudo dnf install epel-release
-sudo dnf install tor
+sudo dnf install epel-release -y
+sudo dnf install tor -y
+```
+
+Enable and start the Tor service:
+
+```bash
+sudo systemctl enable tor
+sudo systemctl start tor
 ```
 
 ### Debian
@@ -50,120 +56,79 @@ First, ensure that your system is up-to-date:
 sudo apt update && sudo apt upgrade -y
 ```
 
-Install Tor:
+Install Tor using the following command:
 
 ```bash
 sudo apt install tor -y
 ```
 
-### Start and Enable Tor Service
-
-On both Rocky Linux and Debian, start and enable the Tor service:
+Enable and start the Tor service:
 
 ```bash
-sudo systemctl start tor
 sudo systemctl enable tor
+sudo systemctl start tor
 ```
-
-Tor runs on port `9050` by default, providing a SOCKS5 proxy.
 
 ## System-wide Proxy Configuration
 
-To route all system-wide traffic through Tor, configure the environment variables for `http_proxy` and `https_proxy`.
+Once Tor is installed, configure your system to route all traffic through it. This can be done by setting up a system-wide proxy that directs traffic through the Tor SOCKS5 proxy.
 
-### Rocky Linux
-
-```bash
-export http_proxy="socks5h://localhost:9050"
-export https_proxy="socks5h://localhost:9050"
-```
-
-### Debian
+Edit your environment variables to include the following:
 
 ```bash
-export http_proxy="socks5h://localhost:9050"
-export https_proxy="socks5h://localhost:9050"
+export http_proxy="socks5://localhost:9050"
+export https_proxy="socks5://localhost:9050"
 ```
 
-To make this configuration permanent, add these lines to your `~/.bashrc` or `~/.bash_profile` (Rocky Linux) or `~/.profile` (Debian).
+You can add these lines to your shell configuration file (e.g., `.bashrc`, `.zshrc`) for persistent proxy settings.
 
 ## Browser Configuration
 
 ### Firefox
 
-1. Open Firefox and navigate to **Settings** > **Network Settings** > **Settings**.
-2. Select **Manual proxy configuration** and set:
-   - SOCKS Host: `localhost`
-   - Port: `9050`
-   - Select SOCKS v5.
-3. Enable **Proxy DNS when using SOCKS v5**.
-4. Save and restart Firefox.
+1. Open Firefox and navigate to `Preferences > General`.
+2. Scroll down to the `Network Settings` section and click on `Settings`.
+3. Select `Manual proxy configuration` and enter `localhost` and port `9050` for both HTTP and HTTPS proxies.
+4. Check the box for `Use this proxy server for all protocols` and click `OK`.
 
 ### Google Chrome / Chromium
 
-#### Using an Extension
-
-1. Install a proxy extension like [SwitchyOmega](https://github.com/FelisCatus/SwitchyOmega/releases) or [FoxyProxy](https://getfoxyproxy.org/downloads.html).
-2. Configure a new SOCKS5 proxy profile with:
-   - Server: `localhost`
-   - Port: `9050`
-3. Activate the profile.
-
-#### Command Line
-
-Alternatively, start Chrome with:
-
-```bash
-google-chrome --proxy-server="socks5://localhost:9050"
-```
+1. Open Google Chrome or Chromium and navigate to `Settings > Advanced > System > Open Proxy Settings`.
+2. In the proxy settings window, configure the SOCKS5 proxy with the address `localhost` and port `9050`.
+3. Save the settings and restart your browser.
 
 ### Microsoft Edge
 
-Since Edge is based on Chromium, you can follow the same steps as for Google Chrome.
+1. Open Microsoft Edge and go to `Settings > System > Open your computer's proxy settings`.
+2. Under `Manual proxy setup`, enable the option to use a proxy server.
+3. Enter `localhost` as the proxy address and `9050` as the port.
+4. Save the settings and restart Microsoft Edge.
 
 ## Testing
 
-To verify that your traffic is being routed through Tor, visit [check.torproject.org](https://check.torproject.org). If configured correctly, you'll see a message confirming that your browser is using Tor.
+To test that your traffic is being routed through Tor, use the following command to check your public IP:
+
+```bash
+curl https://check.torproject.org
+```
+
+This should confirm that you are using the Tor network.
 
 ## Advanced Options
 
-For applications that do not support proxy settings, you can use `proxychains` to force them to use Tor:
-
-### Rocky Linux
-
-```bash
-sudo dnf install proxychains-ng
-```
-
-### Debian
-
-```bash
-sudo apt install proxychains4
-```
-
-Edit `/etc/proxychains.conf` to use `socks5 127.0.0.1 9050`, then run your application with `proxychains <application>`.
+If you need more advanced configurations, such as specific routing for certain applications or configuring firewall rules, refer to the [Tor documentation](https://www.torproject.org/docs/tor-manual.html.en).
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request or open an issue if you have any suggestions or improvements.
+If you have suggestions or improvements, feel free to submit a pull request or open an issue in this repository.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Support the Project
 
 If you found this guide helpful and would like to support the project, consider making a donation. Your contributions help maintain and improve this resource.
 
-### Donate via Bitcoin
-You can send Bitcoin directly to the following address:
+---
 
-**`bc1qy0l39zl7spspzhsuv96c8axnvksypfh8ehvx3e`**
-
-### Donate via Lightning Network
-For faster and lower-fee donations, you can use the Lightning Network:
-
-**asyscom@sats.mobi`**
-
-Thank you for your support!
-```
